@@ -1,31 +1,15 @@
-'use strict';
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+"use strict";
+const mongoose = require("mongoose");
 
-var UserSchema = new Schema({
-  login: {
-    type: String,
-    Required: 'Inform Login'
+const UsersSchema = new mongoose.Schema(
+  {
+    username: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    profile: { type: mongoose.Schema.Types.ObjectId, ref: "Profiles" }, // Ссылка на профиль
+    status: { type: String, enum: ["active", "inactive"], required: true },
+    registerDate: { type: Date, default: Date.now },
   },
-  password: {
-    type: String,
-    Required: 'Inform Password'
-  },
-  register_date: {
-    type: Date,
-    default: Date.now
-  },
-  profile: {
-    type: Schema.Types.ObjectId,
-	ref: 'Profiles'
-  },
-  status: {
-    type: [{
-      type: String,
-      enum: ['active', 'suspended', 'canceled']
-    }],
-    default: ['active']
-  }
- });
- 
-module.exports = mongoose.model('Users', UserSchema);
+  { timestamps: true }
+);
+
+module.exports = mongoose.model("Users", UsersSchema);

@@ -1,0 +1,55 @@
+### Проверка существования пользователя
+@host = http://localhost:4000
+
+GET {{host}}/check?login=admin
+Content-Type: application/json
+
+### Аутентификация пользователя
+GET {{host}}/auth?login=admin&password=admin
+Content-Type: application/json
+
+
+### Получение списка пользователей
+GET {{host}}/users
+Content-Type: application/json
+
+### Создание нового пользователя
+POST {{host}}/users
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "admin",
+    "profile": "basic"
+}
+
+### Обновление пользователя
+PUT {{host}}/users/user123
+Content-Type: application/json
+
+{
+    "password": "newpassword"
+}
+
+### Удаление пользователя
+DELETE {{host}}/users/user123
+Content-Type: application/json
+
+### Получение списка профилей
+GET {{host}}/profiles
+Content-Type: application/json
+
+### Создание нового профиля
+POST {{host}}/profiles
+Content-Type: application/json
+
+{
+  "profileName": "basic",
+  "maxDownload": 100,
+  "maxUpload": 50,
+  "accessPeriod": 30,
+  "attributes": {
+    "Service-Type": "Framed-User",
+    "Framed-Protocol": "PPP"
+  }
+}

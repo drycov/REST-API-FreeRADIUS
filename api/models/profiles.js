@@ -1,23 +1,37 @@
-'use strict';
-var mongoose = require('mongoose');
+"use strict";
+var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
-var ProfileSchema = new Schema({
-  "profile-name": {
-    type:String,
-    Required: 'Inform Profile name'
-  }, 
-  "MaxDownload": {
-    type:Number,
-    Required: 'Inform Max Download Speed'
+var ProfileSchema = new Schema(
+  {
+    profileName: {
+      type: String,
+      required: [true, "Profile name is required"],
+      trim: true,
+    },
+    maxDownload: {
+      type: Number,
+      required: [true, "Max Download Speed is required"],
+      min: [1, "Download speed must be greater than 0"],
+    },
+    maxUpload: {
+      type: Number,
+      required: [true, "Max Upload Speed is required"],
+      min: [1, "Upload speed must be greater than 0"],
+    },
+    accessPeriod: {
+      type: Number,
+      default: 30, // Значение по умолчанию — 30 дней
+    },
+    attributes: {
+      type: Map,
+      of: String,
+      default: {},
+    },
   },
-  "MaxUpload":  {
-    type:Number,
-    Required: 'Inform Max Upload Speed'
-  },
-  "AccessPeriod": {
-    type:Number,
+  {
+    timestamps: true, // Добавляет createdAt и updatedAt
   }
-}, {toJSON: { virtuals: false }});
+);
 
-module.exports = mongoose.model('Profiles', ProfileSchema);
+module.exports = mongoose.model("Profiles", ProfileSchema);
